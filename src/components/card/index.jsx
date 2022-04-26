@@ -1,7 +1,13 @@
 import "./style.css";
 
-const Card = (card) => {
-  return <img src={card.image} alt={card.code} className="card" />;
+function Card({actual}) {
+
+  return(
+   
+    <img src={actual.image} alt={actual.code} className="card" />
+   
+  )
+
 };
 
 export default Card;

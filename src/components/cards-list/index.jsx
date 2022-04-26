@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { Card } from "../card";
+import Card from "../card";
 import "./style.css";
 
-const CardsList = ({ cardsList }) => {
+function CardsList({cardsList}) {
+
   const [suitFilter, setSuitFilter] = useState(false);
 
   const handleSuitFilter = (e) => {
-    if (e.target.id = suitFilter) {
-      suitFilter = true;
+    if (e.target.id === suitFilter) {
+      setSuitFilter(true);
       e.target.checked = false;
     } else {
-      suitFilter = e.target.id
+      setSuitFilter(e.target.id)
     }
   };
 
@@ -19,52 +20,62 @@ const CardsList = ({ cardsList }) => {
       <p>Filtrar por naipe</p>
       <div>
         <input
-          onClick={handleSuitFilter}
-          type="radio"
+          onChange={(e) => handleSuitFilter(e)}
+          type="checkbox"
           id="SPADES"
           name="suit"
         />
-        <label for="SPADES">Espadas</label>
+        <label htmlFor="SPADES">Espadas</label>
 
         <input
-          onClick={handleSuitFilter}
-          type="radio"
+          onChange={(e) => handleSuitFilter(e)}
+          type="checkbox"
           id="HEARTS"
           name="suit"
         />
-        <label for="HEARTS">Copas</label>
+        <label htmlFor="HEARTS">Copas</label>
 
         <input
-          onClick={handleSuitFilter}
-          type="radio"
+          onChange={(e) => handleSuitFilter(e)}
+          type="checkbox"
           id="CLUBS"
           name="suit"
         />
-        <label for="CLUBS">Paus</label>
+        <label htmlFor="CLUBS">Paus</label>
 
         <input
-          onClick={handleSuitFilter}
-          type="radio"
+          onChange={(e) => handleSuitFilter(e)}
+          type="checkbox"
           id="DIAMONDS"
           name="suit"
         />
-        <label for="DIAMONDS">Ouros</label>
+        <label htmlFor="DIAMONDS">Ouros</label>
+      </div>
+      <div>
+     
+        {suitFilter?
+          <>
+              {cardsList
+                .filter((actual) => actual.suit === suitFilter)
+                .map((actual, index) => {
+                  return <Card actual={actual} card={actual} key={index} />;
+                })
+              }
+          </>
+        :
+          <>
+              {cardsList.map((actual, index) => {
+                return <Card actual={actual} card={actual} key={index} />;
+              })}
+          </>
+        }
+
       </div>
     </div>
-    <div>
+    
 
-      {!suitFilter &&
-        cardsList.map((actual, index) => {
-          return <Card card={actual} key={index} />;
-        })}
-
-      {suitFilter &&
-        cardsList
-          .filter((actual) => actual.suit === suitFilter)
-          .map((actual, index) => {
-            <Card card={actual} key={index} />;
-          })}
-    </div>
   );
 };
+
+export default CardsList
 
